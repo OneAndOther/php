@@ -1,5 +1,16 @@
 <?php
-  header("Content-Type: text/html; charset=UTF-8");
+   session_start();
+   header("Content-Type: text/html; charset=UTF-8");
+
+   include('db.php');
+   $link = mysql_connect($db['host'], $db['user'], $db['pw']);
+   if (!$link) {
+       die('Could not connect: ' . mysql_error());
+   }
+   echo 'Connected successfully';
+   mysql_close($link);
+
+
 ?>
 
 
@@ -13,7 +24,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 <?php
-   $isLogin = $_COOKIE['isLogin'];
+   $isLogin = $_SESSION['isLogin'];
    if($isLogin != 1) {
 ?>
 
@@ -29,7 +40,7 @@
 </form>
 <?php
 } else {
-$name = $_COOKIE['name'];
+$name = $_SESSION['name'];
 ?>
 <?=$name?>님, 이미 로그인이 되어있습니다.<br>
 로그아웃 하시려면 아래 버튼을 누르세요.<br>
